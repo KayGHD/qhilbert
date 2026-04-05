@@ -1,0 +1,14 @@
+[build-system]
+requires = ["scikit-build-core>=0.9.2", "nanobind>=2.0.0"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "qhilbert-python"
+version = "0.1.0"
+description = "Parallel-prefix Hilbert curve encoding/decoding for Python"
+requires-python = ">=3.12"
+license = {text = "MIT"}
+
+[tool.scikit-build]
+cmake.build-type = "Release"
+wheel.packages = ["src/qhilbert"]
