@@ -17,6 +17,7 @@ def _get_xp(*arrays):
         mod = type(arr).__module__.split(".")[0]
         if mod == "cupy":
             import cupy
+
             return cupy
     return np
 
@@ -32,6 +33,7 @@ def _spread_bits_32(v, xp):
 
 
 # ---------- Encode (xy -> distance) ----------
+
 
 def hilbert2D_encode(x, y, order=16):
     """Encode arrays of 2D coordinates into Hilbert curve distances.
@@ -98,6 +100,7 @@ def hilbert2D_encode(x, y, order=16):
 
 # ---------- Decode (distance -> xy) ----------
 
+
 def hilbert2D_decode(distances, order=16):
     """Decode arrays of Hilbert curve distances into 2D coordinates.
 
@@ -136,10 +139,14 @@ def hilbert2D_decode(distances, order=16):
     s = s & u32((1 << (2 * order)) - 1)
 
     # Unshuffle (deinterleave): x into high 16 bits, y into low 16
-    t = (s ^ (s >> u32(1))) & u32(0x22222222); s = s ^ t ^ (t << u32(1))
-    t = (s ^ (s >> u32(2))) & u32(0x0C0C0C0C); s = s ^ t ^ (t << u32(2))
-    t = (s ^ (s >> u32(4))) & u32(0x00F000F0); s = s ^ t ^ (t << u32(4))
-    t = (s ^ (s >> u32(8))) & u32(0x0000FF00); s = s ^ t ^ (t << u32(8))
+    t = (s ^ (s >> u32(1))) & u32(0x22222222)
+    s = s ^ t ^ (t << u32(1))
+    t = (s ^ (s >> u32(2))) & u32(0x0C0C0C0C)
+    s = s ^ t ^ (t << u32(2))
+    t = (s ^ (s >> u32(4))) & u32(0x00F000F0)
+    s = s ^ t ^ (t << u32(4))
+    t = (s ^ (s >> u32(8))) & u32(0x0000FF00)
+    s = s ^ t ^ (t << u32(8))
 
     x = (s >> u32(16)).astype(xp.uint16)
     y = (s & u32(0xFFFF)).astype(xp.uint16)
