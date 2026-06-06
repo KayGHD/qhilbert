@@ -14,20 +14,21 @@ Vectorized functions (numpy/cupy arrays, parallel-prefix):
 """
 
 from qhilbert._hilbert import (
-    hilbert2D_encode,
     hilbert2D_decode,
+    hilbert2D_encode,
 )
-
+from qhilbert._vectorized import (
+    hilbert2D_decode as hilbert2D_decode_array,
+)
 from qhilbert._vectorized import (
     hilbert2D_encode as hilbert2D_encode_array,
-    hilbert2D_decode as hilbert2D_decode_array,
 )
 
 __all__ = [
-    "hilbert2D_encode",
     "hilbert2D_decode",
-    "hilbert2D_encode_array",
     "hilbert2D_decode_array",
+    "hilbert2D_encode",
+    "hilbert2D_encode_array",
 ]
 
 __version__ = "0.1.0"
