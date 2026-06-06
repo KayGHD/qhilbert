@@ -19,8 +19,6 @@ from qhilbert._hilbert import (
 )
 from qhilbert._vectorized import (
     hilbert2D_decode as hilbert2D_decode_array,
-)
-from qhilbert._vectorized import (
     hilbert2D_encode as hilbert2D_encode_array,
 )
 
