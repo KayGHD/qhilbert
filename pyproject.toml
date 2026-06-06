@@ -12,3 +12,39 @@ license = {text = "MIT"}
 [tool.scikit-build]
 cmake.build-type = "Release"
 wheel.packages = ["src/qhilbert"]
+
+# =============================================================================
+# Shared Python toolchain — org-wide (KayGHD/.github).
+# Spec: github.com/KayGHD/.github specs/2026-06-05-shared-python-toolchain.md
+# =============================================================================
+[tool.black]
+line-length = 100
+target-version = ["py312", "py313"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src", "tests"]
+extend-exclude = ["build", "dist", ".venv", ".eggs", "*.egg-info", "__pycache__", ".mypy_cache", ".ruff_cache", ".pytest_cache"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "RUF"]
+ignore = [
+    "E501",  # line length — black's job
+    "B008",  # function calls in argument defaults
+    # --- ratchet: pre-existing debt, remove codes as cleared (TODO lint) ---
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["B011", "S101"]
+"__init__.py" = ["F401", "F403"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["qhilbert"]
+combine-as-imports = true
+
+[tool.pyright]
+include = ["src", "tests"]
+exclude = ["**/__pycache__", "**/.venv", "build", "dist"]
+pythonVersion = "3.12"
+typeCheckingMode = "basic"
